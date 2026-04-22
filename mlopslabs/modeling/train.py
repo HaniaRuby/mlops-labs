@@ -8,7 +8,15 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from mlopslabs import config
 
 
-def build_and_train(X_train, y_train, model_type="rf"):
+def build_and_train(X_train, y_train, cfg):
+
+    if cfg.model.name == "random_forest":
+        clf = RandomForestClassifier(
+            n_estimators=cfg.model.n_estimators, random_state=cfg.model.random_state
+        )
+    else:
+        clf = LogisticRegression(max_iter=1000)
+
     # 1. Preprocessing for numerical data
     num_transformer = Pipeline(
         steps=[("imputer", SimpleImputer(strategy="median")), ("scaler", StandardScaler())]
@@ -29,12 +37,6 @@ def build_and_train(X_train, y_train, model_type="rf"):
             ("cat", cat_transformer, config.CAT_FEATURES),
         ]
     )
-
-    # 4. Choose Model
-    if model_type == "rf":
-        clf = RandomForestClassifier(n_estimators=100, random_state=42)
-    else:
-        clf = LogisticRegression(max_iter=1000)
 
     # 5. Create the full Pipeline
     model_pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("classifier", clf)])

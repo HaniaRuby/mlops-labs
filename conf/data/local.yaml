@@ -1,0 +1,5 @@
+raw_path: "data/raw/train.csv"
+processed_path: "models/model.pkl"
+target: "Survived"
+num_features: ['Age', 'Fare', 'SibSp', 'Parch']
+cat_features: ['Sex', 'Embarked', 'Pclass']

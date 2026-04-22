@@ -1,0 +1,18 @@
+data:
+  raw_path: data/raw/train.csv
+  processed_path: models/model.pkl
+  target: Survived
+  num_features:
+  - Age
+  - Fare
+  - SibSp
+  - Parch
+  cat_features:
+  - Sex
+  - Embarked
+  - Pclass
+model:
+  name: logistic_regression
+  test_size: 0.2
+  random_state: 42
+  max_iter: 1000

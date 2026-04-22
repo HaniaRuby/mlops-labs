@@ -1,34 +1,36 @@
+import hydra
 import joblib
+from omegaconf import DictConfig
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from mlopslabs import config
-from mlopslabs.modeling import train  # Ensure folder is 'modeling'
+from mlopslabs.modeling import train
 
 
-def run_pipeline():
-    # Load Data
-    raw_data = pd.read_csv(config.RAW_DATA_DIR / "train.csv")
-    X = raw_data[config.NUM_FEATURES + config.CAT_FEATURES]
-    y = raw_data[config.TARGET]
+@hydra.main(config_path="../conf", config_name="config", version_base="1.3")
+def run_pipeline(cfg: DictConfig):  # 1. Accept the config object
+    # 2. Use cfg for paths instead of the old config.py
+    raw_data = pd.read_csv(cfg.data.raw_path)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    # These can still come from a config or be moved to YAML too
+    features = cfg.data.num_features + cfg.data.cat_features
+    X = raw_data[features]
+    y = raw_data[cfg.data.target]
 
-    # Train 2 models and compare
-    print("Training Logistic Regression...")
-    lr_pipe = train.build_and_train(X_train, y_train, model_type="lr")
-    lr_score = lr_pipe.score(X_test, y_test)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=cfg.model.test_size, random_state=cfg.model.random_state
+    )
 
-    print("Training Random Forest...")
-    rf_pipe = train.build_and_train(X_train, y_train, model_type="rf")
-    rf_score = rf_pipe.score(X_test, y_test)
+    # 3. Use Hydra to decide which model to train
+    print(f"Training {cfg.model.name}...")
+    model_pipe = train.build_and_train(X_train, y_train, cfg)
 
-    print(f"LR Score: {lr_score:.4f} | RF Score: {rf_score:.4f}")
+    score = model_pipe.score(X_test, y_test)
+    print(f"Model Score ({cfg.model.name}): {score:.4f}")
 
-    # Save the winner
-    winner = rf_pipe if rf_score > lr_score else lr_pipe
-    joblib.dump(winner, config.MODELS_DIR / "model.pkl")
-    print(f"Best model saved to {config.MODELS_DIR / 'model.pkl'}")
+    # 4. Save using the path from YAML
+    joblib.dump(model_pipe, cfg.data.processed_path)
+    print(f"Model saved to {cfg.data.processed_path}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,4 @@
+defaults:
+  - data: local
+  - model: rf
+  - _self_

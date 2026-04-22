@@ -1,0 +1,18 @@
+data:
+  raw_path: data/raw/train.csv
+  processed_path: models/model.pkl
+  target: Survived
+  num_features:
+  - Age
+  - Fare
+  - SibSp
+  - Parch
+  cat_features:
+  - Sex
+  - Embarked
+  - Pclass
+model:
+  name: random_forest
+  n_estimators: 100
+  random_state: 42
+  test_size: 0.2

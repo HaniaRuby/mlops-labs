@@ -1,29 +1,18 @@
-from pathlib import Path
+import pandas as pd
 
-from loguru import logger
-from tqdm import tqdm
-import typer
-
-from mlopslabs.config import PROCESSED_DATA_DIR
-
-app = typer.Typer()
+from . import config
 
 
-@app.command()
-def main(
-    # ---- REPLACE DEFAULT PATHS AS APPROPRIATE ----
-    input_path: Path = PROCESSED_DATA_DIR / "dataset.csv",
-    output_path: Path = PROCESSED_DATA_DIR / "features.csv",
-    # -----------------------------------------
-):
-    # ---- REPLACE THIS WITH YOUR OWN CODE ----
-    logger.info("Generating features from dataset...")
-    for i in tqdm(range(10), total=10):
-        if i == 5:
-            logger.info("Something happened for iteration 5.")
-    logger.success("Features generation complete.")
-    # -----------------------------------------
+def preprocess_titanic(df: pd.DataFrame) -> pd.DataFrame:
+    """Cleans and encodes Titanic data."""
+    # Fill missing values
+    df["Age"] = df["Age"].fillna(df["Age"].median())
+    df["Embarked"] = df["Embarked"].fillna(df["Embarked"].mode()[0])
+    df["Fare"] = df["Fare"].fillna(df["Fare"].median())
 
+    # Select features and encode
+    X = pd.get_dummies(df[config.FEATURES], drop_first=True)
 
-if __name__ == "__main__":
-    app()
+    if config.TARGET in df.columns:
+        return pd.concat([X, df[config.TARGET]], axis=1)
+    return X

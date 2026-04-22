@@ -57,6 +57,10 @@ create_environment:
 # PROJECT RULES                                                                 #
 #################################################################################
 
+.PHONY: pipeline
+
+pipeline:
+	uv run python -m mlopslabs.dataset
 
 ## Make dataset
 .PHONY: data
@@ -78,6 +82,7 @@ print('Available rules:\n'); \
 print('\n'.join(['{:25}{}'.format(*reversed(match)) for match in matches]))
 endef
 export PRINT_HELP_PYSCRIPT
+
 
 help:
 	@$(PYTHON_INTERPRETER) -c "${PRINT_HELP_PYSCRIPT}" < $(MAKEFILE_LIST)

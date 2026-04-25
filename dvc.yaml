@@ -1,0 +1,10 @@
+stages:
+  train:
+    cmd: uv run python -m mlopslabs.dataset model=rf
+    deps:
+      - mlopslabs/modeling/train.py
+      - mlopslabs/dataset.py
+      - data/raw/train.csv
+      - conf/
+    outs:
+      - models/model.pkl

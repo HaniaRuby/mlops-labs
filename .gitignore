@@ -6,6 +6,10 @@
 # Mac OS-specific storage files
 .DS_Store
 
+# hydra local logs
+outputs/
+multirun/
+
 # vim
 *.swp
 *.swo

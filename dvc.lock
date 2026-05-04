@@ -1,0 +1,30 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: uv run python -m mlopslabs.dataset model=rf
+    deps:
+    - path: conf/
+      hash: md5
+      md5: 69e3186990d60d6009639e6eb9836691.dir
+      size: 520
+      nfiles: 4
+    - path: data/raw/train.csv
+      hash: md5
+      md5: 2309cc5f04782ed9bb6016d9f4e381cf
+      size: 61194
+      isexec: true
+    - path: mlopslabs/dataset.py
+      hash: md5
+      md5: eb24b8196da5b16181ce2b8c78b5b0cf
+      size: 1288
+      isexec: true
+    - path: mlopslabs/modeling/train.py
+      hash: md5
+      md5: 651ba0157596ef519d258d2d7577f9b3
+      size: 1302
+      isexec: true
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: 9bad31613ef8e2bb51bf43bcd19713fd
+      size: 2439243

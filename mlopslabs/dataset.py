@@ -18,7 +18,7 @@ def run_pipeline(cfg: DictConfig):  # 1. Accept the config object
     y = raw_data[cfg.data.target]
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=cfg.model.test_size, random_state=cfg.model.random_state
+        X, y, test_size=cfg.train_params.test_size, random_state=cfg.model.params.random_state
     )
 
     # 3. Use Hydra to decide which model to train

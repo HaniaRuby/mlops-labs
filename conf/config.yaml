@@ -2,3 +2,7 @@ defaults:
   - data: local
   - model: rf
   - _self_
+
+train_params:
+  test_size: 0.2
+  random_state: 42

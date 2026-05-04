@@ -5,17 +5,14 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
+from hydra.utils import instantiate
+
 from mlopslabs import config
 
 
 def build_and_train(X_train, y_train, cfg):
 
-    if cfg.model.name == "random_forest":
-        clf = RandomForestClassifier(
-            n_estimators=cfg.model.n_estimators, random_state=cfg.model.random_state
-        )
-    else:
-        clf = LogisticRegression(max_iter=1000)
+    clf = instantiate(cfg.model.params)
 
     # 1. Preprocessing for numerical data
     num_transformer = Pipeline(

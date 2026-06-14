@@ -6,3 +6,8 @@ defaults:
 train_params:
   test_size: 0.2
   random_state: 42
+
+mlflow:
+  repo_name: "mlops-labs"
+  use_mlflow: true
+  tracking_uri: "https://dagshub.com/haniaruby/mlops-labs.mlflow"

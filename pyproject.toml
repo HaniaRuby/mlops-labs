@@ -25,6 +25,7 @@ dependencies = [
     "loguru",
     "matplotlib",
     "mkdocs",
+    "mlflow>=3.13.0",
     "notebook",
     "numpy",
     "omegaconf>=2.3.0",

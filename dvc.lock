@@ -5,8 +5,8 @@ stages:
     deps:
     - path: conf/
       hash: md5
-      md5: 69e3186990d60d6009639e6eb9836691.dir
-      size: 520
+      md5: b1112fda3d78fd4c156686dd276027b8.dir
+      size: 640
       nfiles: 4
     - path: data/raw/train.csv
       hash: md5
@@ -15,8 +15,8 @@ stages:
       isexec: true
     - path: mlopslabs/dataset.py
       hash: md5
-      md5: eb24b8196da5b16181ce2b8c78b5b0cf
-      size: 1288
+      md5: 94f9e525f07744b9c730a6658e38fc72
+      size: 2480
       isexec: true
     - path: mlopslabs/modeling/train.py
       hash: md5

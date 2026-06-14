@@ -110,8 +110,6 @@ uv run python server.py
 
 The application will dynamically resolve local binary states and initiate listeners on default cluster port `8000`.
 
-![API Response in Bruno](./api response screenshot.png)
-
 ### Batch Testing Configuration via Curl / Bruno
 
 To test multi-record parsing functionality, issue a `POST` request to the `/predict` endpoint using the following sample array layout:
